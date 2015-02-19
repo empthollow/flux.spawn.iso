@@ -1,0 +1,53 @@
+# fluxbox startup-script:
+#
+# Lines starting with a '#' are ignored.
+
+# You can set your favourite wallpaper here if you don't want
+# to do it from your style.
+#
+fbsetbg -f .fluxbox/wallpaper/sunsetbackgroundwhite.jpg
+#
+# This sets a black background
+
+#/usr/local/bin/fbsetroot -solid black
+
+# This shows the fluxbox-splash-screen
+# fbsetbg -C /usr/local/share/fluxbox/splash.jpg
+
+# Other examples. Check man xset for details.
+#
+# Turn off beeps:
+xset b 0
+#
+# Increase the keyboard repeat-rate:
+# xset r rate 195 35
+#
+# Your own fonts-dir:
+# xset +fp "/home/empthollow/.fonts"
+#
+# Your favourite mouse cursor:
+# xsetroot -cursor_name right_ptr
+#
+# Change your keymap:
+# xmodmap "/home/empthollow/.Xmodmap"
+
+#/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+volumeicon &
+nm-applet &
+batterymon &
+conky &
+conky -c ~/.conkyfc &
+xcompmgr -f &
+
+# Applications you want to run with fluxbox.
+# MAKE SURE THAT APPS THAT KEEP RUNNING HAVE AN ''&'' AT THE END.
+#
+# unclutter -idle 2 &
+# wmnd &
+# wmsmixer -w &
+# idesk &
+
+# And last but not least we start fluxbox.
+# Because it is the last app you have to run it with ''exec'' before it.
+
+exec /usr/bin/fluxbox

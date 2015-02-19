@@ -1,0 +1,10 @@
+{ 
+   "shell-theme": {
+   "name": "ANewStartBlood", 
+   "author": "alecive", 
+   "version": "1.0",
+   "type":   "custom",
+   "thumbnail": "preview-anewstartblood.png", 
+   "url": "http://alecive.deviantart.com/" 
+    }
+}

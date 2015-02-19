@@ -1,0 +1,21 @@
+int    -> integer variable
+short  -> short integer
+long   -> long integer
+float  -> single precision real (floating point) variable
+double -> double precision real (floating point) variable
+char   -> character variable (single byte)
+
+	printf( "format", variables );
+	
+%.nd	integer (optional n = number of columns; if 0, pad with zeroes)
+%m.nf	float or double (optional m = number of columns,
+			 	  n = number of decimal places)
+%ns	string (optional n = number of columns)
+%c    	character
+\n \t 	to introduce new line or tab
+
++	add
+-	subtract
+*	multiply
+/	divide
+=	equals (assignment operator)

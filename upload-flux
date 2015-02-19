@@ -1,0 +1,12 @@
+#!/bin/bash
+<<<<<<< HEAD
+
+if [ -n "$2" ]; then
+trickle -u 128 rsync --progress -e ssh $1 $2@frs.sourceforge.net:/home/frs/project/fluxcapacity
+else
+echo "upload-flux [/path/to/file] [username]"
+fi
+
+=======
+trickle -u 128 rsync --progress -e ssh $1 empthollow@frs.sourceforge.net:/home/frs/project/fluxcapacity
+>>>>>>> a8fb0ec... build users

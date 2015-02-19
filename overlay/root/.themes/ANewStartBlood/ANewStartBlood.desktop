@@ -1,0 +1,16 @@
+
+[Desktop Entry]
+Version=1.2
+Encoding=UTF-8
+Name=Red
+Type=X-GNOME-Metatheme
+Comment=ANewStartBlood theme by alecive
+
+Name[it]=ANewStartBlood
+
+[X-GNOME-Metatheme]
+GtkTheme=ANewStartBlood
+MetacityTheme=ANewStartBlood
+IconTheme=AwOken
+CursorTheme=DMZ-White
+ButtonLayout=menu:minimize,maximize,close

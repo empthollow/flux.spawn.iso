@@ -1,0 +1,53 @@
+#!/bin/bash
+#
+# /etc/rc.local: Local multi-user startup script.
+#
+echo "1" > /proc/sys/dev/mac_hid/mouse_button_emulation
+echo "97" > /proc/sys/dev/mac_hid/mouse_button3_keycode
+echo "100" > /proc/sys/dev/mac_hid/mouse_button2_keycode
+
+# Check for correct battery identifier
+battery=$(ls /sys/class/power_supply | grep BAT)
+if [ -n $battery ]; then
+sed -i s/BAT/$battery/g /etc/skel/.conkyrc
+sed -i '41 s/^#//' /etc/skel/.conkyrc
+sed -i '42 s/^#//' /etc/skel/.conkyrc
+fi
+
+# set volume
+amixer set Master 90% unmute
+amixer set PCM 100% unmute
+
+#Create Networking in conkyrc
+#echo "\${color white}Networking" >> /etc/skel/.conkyrc
+#echo "\${hr}" >> /etc/skel/.conkyrc
+for net in $(ls /sys/class/net | grep -v lo) ; do
+	echo "\${if_up $net}\${color gray}$net\${color #707070}:\$color \${color white} \${addr $net}
+\${color gray} Down\${color #707070}:\$color \${downspeed $net} \${color gray} Up\${color #707070}:\$color \${upspeed $net} \${endif}" >> /etc/skel/.conkyrc
+done
+
+# Create fstab, bookmarks and mount
+echo "\${color white}Mounted Filesystems" >> /etc/skel/.conkyrc
+echo "\${hr}" >> /etc/skel/.conkyrc
+for dev in $(ls /dev/disk/by-label/ | grep -v FluxCapacity) ; do
+	mkdir /media/$dev
+	echo "/dev/disk/by-label/$dev /media/$dev auto defaults,users,exec,rw 0 0" >> /etc/fstab
+	echo "file:///media/$dev $dev" >> /etc/skel/.gtk-bookmarks
+	echo "\${if_mounted /media/$dev}\${color gray}$dev\${color #707070}: \$color\${fs_used /media/$dev}/\${fs_size /media/$dev} 
+ \${color gray}Free\${color #707070}: \$color\${fs_free /media/$dev} \${fs_bar /media/$dev}\${endif}" >> /etc/skel/.conkyrc
+done
+mount -a
+
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+# Adding user accounts and set passwords
+useradd -u 1000 -g users -G storage,floppy,optical,audio,video,network,games,wheel,disk -m flux -p ""
+echo root:root | chpasswd 
+>>>>>>> 1814835... 7.43 final
+=======
+>>>>>>> a8fb0ec... build users
+#sed -i '9,46 d' /etc/rc.local
+
+# Create database for locate
+updatedb &

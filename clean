@@ -1,0 +1,27 @@
+#!/bin/bash
+
+usage()
+{
+echo "USAGE: clean [operation]
+Operations
+	nocache - Save /var/cache/pacman/pkg
+	work	- Remove work directory
+	repo	- Remove repo directory in overlay
+	all	- Remove work and repo"	
+}
+
+pacache()
+{
+sudo mv work/root-image/var/cache/pacman/pkg /tmp/pkg
+sudo rm -r work
+sudo mkdir -p work/root-image/var/cache/pacman
+sudo mv /tmp/pkg work/root-image/var/cache/pacman/pkg
+}
+
+case $1 in
+nocache		)	pacache ;;
+work		)	sudo rm -r work ;;
+repo		)	rm -r overlay/etc/repo ;;
+all		)	sudo rm -r work; rm -r overlay/etc/repo ;;
+*		)	usage ;;
+esac

@@ -1,0 +1,52 @@
+! fluxbox-update_configs added '(workspace=[current])' to (Next|Prev)(Window|Group)
+! check lines marked by 'FBCV13' if they are correctly updated
+!mouse actions added by fluxbox-update_configs
+OnTitlebar Mouse1 :MacroCmd {Focus} {Raise} {ActivateTab}
+!mouse actions added by fluxbox-update_configs
+OnTitlebar Move1 :StartMoving
+OnLeftGrip Move1 :StartResizing bottomleft
+OnRightGrip Move1 :StartResizing bottomright
+OnWindowBorder Move1 :StartMoving
+
+!mouse actions added by fluxbox-update_configs
+OnTitlebar Mouse2 :StartTabbing
+
+!mouse actions added by fluxbox-update_configs
+OnTitlebar Double Mouse1 :MaximizeWindow
+OnTitlebar Mouse3 :WindowMenu
+
+!mouse actions added by fluxbox-update_configs
+OnWindow Mod4 Shift Mouse1 :MacroCmd {Raise} {Focus} {StartMoving}
+OnWindow Mod4 Mouse2 :MacroCmd {Raise} {Focus} {StartResizing BottomRight}
+
+OnDesktop Mouse1 :HideMenus
+OnDesktop Mouse2 :WorkspaceMenu
+OnDesktop Mouse3 :RootMenu
+OnDesktop Mouse4 :
+OnDesktop Mouse5 :
+
+Mod4 q :close
+Mod4 m :MaximizeWindow
+Mod4 t :ArrangeWindows 	# tile windows horizontally
+Mod4 x :KillWindow
+Mod4 i :Minimize
+Mod4 r :MacroCmd {ResizeTo 950 550} {MoveTo 30 15 UpperLeft}
+Mod4 o :RootMenu
+Mod4 Mouse1 :RootMenu
+Mod4 d :ShowDesktop
+Mod4 n :ExecCommand Eterm
+
+Mod4 h :PrevTab 	# Move 1 tab left
+Mod4 l :NextTab 	# Move 1 tab right
+Mod4 j :FocusDown	# Move focus down
+Mod4 k :FocusUp		# Move focus up
+Mod4 space : Raise	# Raise focused window
+
+Mod4 Tab :NextWindow (workspace=[current]) 
+Mod4 Shift Tab :PrevWindow (workspace=[current])
+Mod4 F1 :Workspace 1
+Mod4 F2 :Workspace 2
+Mod4 F3 :Workspace 3
+Mod4 F4 :Workspace 4
+
+

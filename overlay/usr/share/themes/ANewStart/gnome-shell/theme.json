@@ -1,0 +1,10 @@
+{ 
+   "shell-theme": {
+   "name": "ANewStart", 
+   "author": "alecive", 
+   "version": "1.0",
+   "type":   "custom",
+   "thumbnail": "preview-anewstart.png", 
+   "url": "http://alecive.deviantart.com/art/GNOME-shell-ANewStart-268147359" 
+    }
+}

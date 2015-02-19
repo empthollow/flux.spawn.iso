@@ -1,0 +1,44 @@
+auto_view text/html
+
+# MY EMAIL IMAP SERVER
+#set from = "USERNAME@gmail.com"
+#set imap_user = "USERNAME@gmail.com"
+#set imap_pass = ""
+
+#set folder = "imaps://imap.gmail.com:993"
+#set spoolfile = "+INBOX"
+#set postponed ="+[Gmail]/Drafts"
+#set record="+[Gmail]/Sent"
+#set sort=reverse-threads
+
+#set smtp_url = "smtp://USERNAME@smtp.gmail.com:587/"
+#set smtp_pass = ""
+
+#set move = no  #Stop asking to "move read messages to mbox"!
+#set imap_keepalive = 900
+
+#set mail_check=10
+#bind index "^" imap-fetch-mail
+
+
+
+# My email address POP server
+#set pop_user="username@gmail.com"
+
+# My email account password
+#set pop_pass="password"
+
+# Too many email headers make reading a message difficult
+#ignore *
+#unignore From: To: Cc: Subject: Date: #Only these are shown in the header
+
+#To ensure that mutt does not put
+#'username@localhost.localdomain in From
+#set from="username@gmail.com"
+#set use_from=yes
+#set envelope_from="yes"
+
+#The text editor I want to use to write emails
+#The default is nano
+set editor=vi
+

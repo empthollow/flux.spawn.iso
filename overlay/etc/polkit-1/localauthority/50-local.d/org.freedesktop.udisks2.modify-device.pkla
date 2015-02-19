@@ -1,0 +1,6 @@
+[system mounts]
+Identity=unix-group:storage
+Action=org.freedesktop.udisks2.modify-device*
+ResultAny=yes
+ResultInactive=yes
+ResultActive=yes

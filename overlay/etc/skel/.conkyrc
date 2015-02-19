@@ -1,0 +1,57 @@
+background		no
+update_interval	1.0
+double_buffer		yes
+
+use_xft			yes
+xftfont			Monospace:size=8
+xftalpha			0.8
+
+own_window				yes
+own_window_transparent	yes
+own_window_type			override
+own_window_hints			undecorated,below,sticky,skip_taskbar,skip_pager
+#on_bottom				yes
+
+minimum_size				100 45
+draw_shades				no
+draw_outline				yes
+draw_borders				no
+draw_graph_borders			yes
+stippled_borders			0
+border_margin				0
+border_width				0
+
+default_color				white
+default_shade_color		black
+default_outline_color		black
+
+alignment				top_right
+gap_x					10
+gap_y					20
+#gap_y					10
+
+no_buffers				no
+
+TEXT
+$nodename
+${hr}
+${color gray}Uptime${color #707070}:$color $uptime 
+${color gray}Load${color #707070}:$color $loadavg
+${color gray}Kernel${color #707070}: $color ${kernel}
+#${color gray}Battery${color #707070}: ${color white} ${battery_time BAT} 
+# ${battery_percent BAT}% ${battery_bar BAT}
+${color gray}CPU${color #707070}:${color white} ${freq}MHz  
+${color white}${cpu}% ${cpubar}
+${color gray}Memory${color #707070}:${color white} $mem/$memmax	
+${color white}${memperc}% ${membar}
+
+${color white}Top Processes
+${hr}
+${color}Name              PID    CPU%
+${color gray} ${top name 1} ${top pid 1} ${top cpu 1} 
+${color gray} ${top name 2} ${top pid 2} ${top cpu 2} 
+${color gray} ${top name 3} ${top pid 3} ${top cpu 3} 
+${color gray} ${top name 4} ${top pid 4} ${top cpu 4}
+${color gray} ${top name 5} ${top pid 5} ${top cpu 5}
+
+

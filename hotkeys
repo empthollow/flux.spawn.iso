@@ -1,0 +1,25 @@
+Super + q :close
+Super + m :MaximizeWindow
+Super + t :ArrangeWindows 	# tile windows horizontally
+Super + x :KillWindow
+Super + i :Minimize
+Super + r :MacroCmd {ResizeTo 950 550} {MoveTo 30 15 UpperLeft}
+Super + o :RootMenu
+Super + Mouse1 :RootMenu
+Super + d :ShowDesktop
+Super + n :ExecCommand Eterm
+Super + h :PrevTab 	# Move 1 tab left
+Super + l :NextTab 	# Move 1 tab right
+Super + j :FocusDown	# Move focus down
+Super + k :FocusUp		# Move focus up
+Super + space : Raise	# Raise focused window
+Super + Tab :NextWindow (workspace=[current]) 
+Super + Shift Tab :PrevWindow (workspace=[current])
+Super + F1 :Workspace 1
+Super + F2 :Workspace 2
+Super + F3 :Workspace 3
+Super + F4 :Workspace 4
+Right ALT or middle mouse to paste selected text
+Right CTRL to right click
+Super + Shift + Mouse1 to move window.
+[Press Enter]

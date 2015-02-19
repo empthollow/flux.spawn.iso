@@ -1,0 +1,16 @@
+
+[StatusIcon]
+stepsize=5
+lmb_slider=true
+mmb_mute=true
+onclick=gmixer
+theme=White Gnome
+
+[Hotkeys]
+up_enabled=true
+down_enabled=true
+mute_enabled=true
+up=XF86_AudioRaiseVolume
+down=XF86_AudioLowerVolume
+mute=XF86AudioMute
+

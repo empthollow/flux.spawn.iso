@@ -1,0 +1,14 @@
+AVCheck=0
+SizeLimit=0
+LastInfection=Never
+HTTPProxy=0
+OpenDNS=1
+TruncateLog=1
+GUICheck=0
+SaveToLog=0
+Whitelist=
+Update=single
+Thorough=0
+ScanHidden=0
+Recursive=0
+Mounted=0

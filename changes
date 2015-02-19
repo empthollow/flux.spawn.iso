@@ -1,0 +1,46 @@
+adjust theme
+adjust slim theme for multi desktop
+update flux-utilities
+*add conky for fchelp
+fstab/conky partitions
+*change pacman mirrorlist
+thunar permissions
+*put packages.list in overlay
+update hotkeys to work
+*edit pam for slim.
+change theme
+add .service file for conky networking
+switch to terminator
+switch defaul term in thunar
+switch default term in menu
+switch to smplayer?
+pulseaudio?
+switch to pnmixer for tray?
+______________________
+
+===Flux-utils========
+update daemondialog
+*wallpaper setter .desktop file
+flux2hd
+	change packages.list & remove generation
+	*install fresh
+	*grub accomodate windows
+	copy .conkyrc from running
+	check for swap update to parted
+	daemondialog - add x11vnc
+	sudoers
+	edit sudoers for install
+	check 64bit
+*slim theme package
+
+_______________________________
+Web sIte
+
+*burning / dd
+*packages list
+installation
+label a disk
+hfsprogs
+downloads page
+contact page
+

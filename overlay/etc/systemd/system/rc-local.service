@@ -1,0 +1,14 @@
+[Unit]
+Description=/etc/rc.local Compatibility
+ConditionFileIsExecutable=/etc/rc.local
+#After=NetworkManager.service
+
+[Service]
+Type=oneshot
+ExecStart=/etc/rc.local
+TimeoutSec=0
+StandardInput=tty
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

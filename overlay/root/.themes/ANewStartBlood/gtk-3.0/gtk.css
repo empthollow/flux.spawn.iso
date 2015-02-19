@@ -1,0 +1,92 @@
+/* 
+  NAME: ANewStartBlood
+	AUTHOR: alecive
+	WEBSITE: http://alecive.deviantart.com
+	LICENSE: CC-by-nc-sa
+	DESCRIPTION: A minimalistic and usable GTK3 theme made to match ANewStartBlood suite.
+*/
+
+/* default color scheme */
+@define-color bg_color #353535;
+@define-color fg_color #d4d4d4;
+@define-color base_color #3f3f3f;
+@define-color text_color #efefef;
+@define-color selected_bg_color #6b0000;
+@define-color selected_fg_color #ffffff;
+@define-color tooltip_bg_color #f2f2f2;
+@define-color tooltip_fg_color #000000;
+
+/* other color schemes could simply override these */
+@define-color theme_bg_color @bg_color;
+@define-color theme_fg_color @fg_color;
+@define-color theme_base_color @base_color;
+@define-color theme_text_color @text_color;
+@define-color theme_selected_bg_color @selected_bg_color;
+@define-color theme_selected_fg_color @selected_fg_color;
+@define-color theme_tooltip_bg_color @tooltip_bg_color;
+@define-color theme_tooltip_fg_color @tooltip_fg_color;
+
+/* misc colors used by gtk+ */
+@define-color link_color #b7db67;
+@define-color warning_color #f57900;
+@define-color error_color #cc0000;
+@define-color success_color #4e9a06;
+
+/* theme common colors */
+@define-color button_insensitive_bg_color mix (@button_bg_color, @theme_bg_color, 0.6);
+@define-color dark_bg_color #4e4e4e;      /* it's not properly a dark_bg :) */
+@define-color dark_fg_color #353535;      /* it's not properly a dark_fg :) */
+
+@define-color internal_element_color #afafaf;
+@define-color insensitive_bg_color @bg_color;
+@define-color insensitive_fg_color darker (@bg_color);
+@define-color insensitive_border_color shade (@internal_element_color, 1.37);
+@define-color inactive_frame_color #c8c8c8;
+@define-color inactive_frame_border_a #8b8b8b;
+@define-color inactive_frame_border_b #c6c6c6;
+
+@define-color trough_bg_color_a #dadada;
+@define-color trough_bg_color_b #cbcbcb;
+
+@define-color toolbar_gradient_base #c8c8c8;
+@define-color toolbar_gradient_final #bfbfbf;
+@define-color toolbar_border #bbb;
+
+@define-color button_bg_color #3d3d3d;
+@define-color button_gradient_color_a #595959;
+@define-color button_gradient_color_b #3d3d3d;
+@define-color button_active_gradient_color_a shade (@button_gradient_color_b, 0.90);
+@define-color button_active_gradient_color_b shade (@button_gradient_color_a, 0.90);
+
+@define-color progressbar_through_a #b6b6b6;
+@define-color progressbar_through_b #c4c4c4;
+@define-color progressbar_through_border #a3a3a3;
+@define-color progressbar_background_a #9cebff;
+@define-color progressbar_background_b #7dabcc;
+@define-color progressbar_border #93c3e6;
+
+@define-color menuitem_background_a @selected_bg_color;
+@define-color menuitem_background_b @selected_bg_color;
+@define-color menuitem_border #6f6f6f;
+
+@define-color transparent rgba (0, 0, 0, 0);
+
+/* User defined for this theme */
+@define-color theme_border_color_a #9f9f9f;
+@define-color theme_border_color_b #6f6f6f;
+@define-color scrollslider_normal #b0b0b0;
+@define-color scrollslider_hover #80c6d3;
+@define-color listview_header_gradient_a #d7d7d7;
+@define-color listview_header_gradient_b #c5c5c5;
+@define-color sidebar_color @bg_color;
+@define-color listview_border #bababa;
+@define-color menubar_color @bg_color;
+@define-color check_gradient_a #6b0000;
+@define-color check_gradient_b #5f0000;
+@define-color column_header @base_color;
+/* End user defined for this theme */
+
+@import url("gtk-widgets.css");
+@import url("apps/unity.css");
+@import url("apps/nautilus.css");
+@import url("apps/gnome-panel.css");

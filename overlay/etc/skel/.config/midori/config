@@ -1,0 +1,22 @@
+
+[settings]
+default-encoding=ISO-8859-1
+last-window-width=970
+last-window-height=679
+last-panel-position=489
+last-panel-page=4
+show-menubar=false
+toolbar-style=MIDORI_TOOLBAR_ICONS
+toolbar-items=CompactMenu,TabNew,Back,Forward,Homepage,ReloadStop,Next,Bookmarks,Location,
+text-editor=medit %F
+homepage=http://www.duckduckgo.com
+location-entry-search=http://duckduckgo.com/?q=
+identify-as=MIDORI_IDENT_FIREFOX
+user-agent=Mozilla/5.0 (X11; U; Linux; en-us; rv:1.9.0.2) Gecko/2008092313 Firefox/3.8 Midori/0.2
+
+[extensions]
+libadblock.so=true
+libshortcuts.so=true
+libstatus-clock.so=true
+libtoolbar-editor.so=true
+libformhistory.so=true

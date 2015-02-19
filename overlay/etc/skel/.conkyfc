@@ -1,0 +1,73 @@
+background		no
+update_interval	1.0
+double_buffer		yes
+
+use_xft			yes
+xftfont			Monospace:size=8
+xftalpha			0.8
+
+own_window				yes
+own_window_transparent	yes
+own_window_type			override
+own_window_hints			undecorated,below,sticky,skip_taskbar,skip_pager
+#on_bottom				yes
+
+minimum_size				100 45
+draw_shades				no
+draw_outline				yes
+draw_borders				no
+draw_graph_borders			yes
+stippled_borders			0
+border_margin				0
+border_width				0
+
+default_color				white
+default_shade_color		black
+default_outline_color		black
+
+alignment				top_left
+gap_x					10
+gap_y					20
+#gap_y					10
+
+no_buffers				no
+text_buffer_size			2048
+
+TEXT
+Tribbles
+${hr}
+${color gray}The root password is 'root'
+${color gray}Type 'orphan' to remove orphaned packages
+${color gray}Don't forget to run 'pacman -Sy' before using pacman or orphan
+${color gray}Type 'sudo flux2hd' to install Flux Capacity to your hard drive
+
+Hotkeys
+${hr}
+Right ALT or middle mouse to paste selected text
+Right CTRL to right click
+Super + Shift + Mouse1 to move window
+Super + q :close
+Super + m :MaximizeWindow
+Super + t :ArrangeWindows 	- tile windows horizontally
+Super + x :KillWindow
+Super + i :Minimize
+Super + r :MacroCmd {ResizeTo 950 550} {MoveTo 30 15 UpperLeft}
+Super + o :RootMenu
+Super + Mouse1 :RootMenu
+Super + d :ShowDesktop
+Super + n :ExecCommand Eterm
+Super + h :PrevTab 	- Move 1 tab left
+Super + l :NextTab 	- Move 1 tab right
+Super + j :FocusDown	- Move focus down
+Super + k :FocusUp	- Move focus up
+Super + space : Raise	- Raise focused window
+Super + Tab :NextWindow (workspace=[current]) 
+Super + Shift Tab :PrevWindow (workspace=[current])
+Super + F1 :Workspace 1
+Super + F2 :Workspace 2
+Super + F3 :Workspace 3
+Super + F4 :Workspace 4
+Right ALT or middle mouse to paste selected text
+Right CTRL to right click
+Super + Shift + Mouse1 to move window.
+

@@ -1,0 +1,48 @@
+# ==============================================================================
+# GNOME PANEL SPECIFIC SETTINGS
+# ==============================================================================
+
+style "panel"
+{
+	xthickness = 0
+	ythickness = 0
+
+	bg_pixmap[NORMAL] = "../panel.png"
+ 	bg[NORMAL] = "#E3E3E3" #                         # Default top/bottom panel background 
+ 	bg[PRELIGHT] = "#E3E3E3" # @bg_color      # panel prelight
+
+	engine "murrine"
+	{
+		#border_shades = {1.2, 1.0} 		# draw a gradient on the border.
+		#border_colors = { "#2D2416", "#2D2416" }
+		roundness = 1
+	}
+}
+
+style "panel_task_button" = "panel"
+{
+	xthickness = 0
+	xthickness = 0
+
+  engine "murrine" {
+    roundness         = 1
+	  border_colors     = {"#7C7C7C", "#7C7C7C"}
+  	border_shades     = {1.0, 1.0} # draw a gradient on the border.
+	  gradient_shades   = {1.0,1.0,1.0,1.0} 
+  }
+}
+
+#widget_class "*Panel*"            style "panel"
+widget "*PanelWidget*"            style "panel"
+widget "*PanelApplet*"            style "panel"
+widget "*fast-user-switch*"       style "panel" # workaround for Fast User Switch applet
+widget "*CPUFreqApplet*"          style "panel" # workaround for CpuFreq Applet
+class "PanelApp*"                 style "panel"
+class "PanelToplevel*"            style "panel"
+#widget_class "*Mail*"             style "panel"
+widget_class "*notif*"            style "panel"
+
+#widget_class "*?anel*utton"       style "panel_task_button" # causing problems to monodevelop
+widget "*task*"                   style "panel_task_button"
+widget "*.tasklist-button"        style "panel_task_button"
+widget "*PanelApplet*TaskTitle*"  style "panel_task_button"
