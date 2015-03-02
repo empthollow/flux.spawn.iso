@@ -38,16 +38,10 @@ for dev in $(ls /dev/disk/by-label/ | grep -v FluxCapacity) ; do
 done
 mount -a
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 # Adding user accounts and set passwords
-useradd -u 1000 -g users -G storage,floppy,optical,audio,video,network,games,wheel,disk -m flux -p ""
-echo root:root | chpasswd 
->>>>>>> 1814835... 7.43 final
-=======
->>>>>>> a8fb0ec... build users
-#sed -i '9,46 d' /etc/rc.local
+#useradd -u 1000 -g users -G storage,floppy,optical,audio,video,network,games,wheel,disk -m flux -p ""
+#echo root:root | chpasswd 
+sed -i '9,46 d' /etc/rc.local
 
 # Create database for locate
 updatedb &

@@ -2,11 +2,8 @@
 
 set -e 
 revisionn=$(ls out | cut -c 16-17 | tail -1)
-echo $revisionn
 revision=$(($revisionn + 01))
-echo $revision result
 if [ "$revision" -lt "10" ]; then
-	echo "lt"
 	revision=0$revision
 else
 	revision=$revision
@@ -43,6 +40,9 @@ make_basefs() {
     cp packages.list overlay/etc
     cp -rd overlay/* "${work_dir}"/airootfs/
     tar -czf work/airootfs/etc/overlay.tar.gz overlay
+    echo "localgen"
+    umount -l work/airootfs/dev
+    umount -l work/airootfs
     mkarchiso -v -w "${work_dir}" -D "${install_dir}" -r 'locale-gen' run
     cat ${work_dir}/airootfs/etc/group | grep -c flux > 1 || chroot ${work_dir}/airootfs useradd -u 1000 -g users -G storage,floppy,optical,audio,video,network,games,wheel,disk -m flux -p ""
     chroot ${work_dir}/airootfs echo root:root | chpasswd

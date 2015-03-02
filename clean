@@ -18,6 +18,10 @@ sudo mkdir -p work/root-image/var/cache/pacman
 sudo mv /tmp/pkg work/root-image/var/cache/pacman/pkg
 }
 
+if [ -n "$(mount | grep airootfs)" ]; then
+sudo umount -l work/airootfs
+fi
+
 case $1 in
 nocache		)	pacache ;;
 work		)	sudo rm -r work ;;

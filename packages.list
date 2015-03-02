@@ -1,5 +1,4 @@
 abiword
-abiword-plugins
 acpi
 afpfs-ng
 alsa-oss
@@ -17,6 +16,7 @@ conky
 cpio
 cups
 deadbeef
+dmidecode
 dnsutils
 dosfstools
 dsniff
