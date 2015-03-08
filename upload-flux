@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ -n "$2" ]; then
-trickle -u 128 rsync --progress -e ssh $1 $2@frs.sourceforge.net:/home/frs/project/fluxcapacity
+trickle -u 3000 rsync --progress -e ssh $1 $2@frs.sourceforge.net:/home/frs/project/fluxcapacity
 else
 echo "upload-flux [/path/to/file] [username]"
 fi
