@@ -1,7 +1,9 @@
 #!/bin/bash
 
 set -e 
-revisionn=$(ls out | cut -c 16-17 | tail -1)
+START=$(date +%s);
+out_dir=/home/empthollow/FluxImages
+revisionn=$(ls $out_dir | cut -c 16-17 | tail -1)
 revision=$(($revisionn + 1))
 if [ "$revision" -lt "10" ]; then
 	revision=0$revision
@@ -10,11 +12,9 @@ else
 fi
 iso_name=fluxcapacity
 iso_label="FluxCapacity"
-iso_version=8.$revision
+iso_version=9.$revision
 install_dir=flux
 work_dir=work
-out_dir=out
-
 
 case $1 in
 	i686	)	arch=i686 ;;
@@ -47,19 +47,20 @@ if [ -n "$(mount | grep airootfs)" ]; then
 fi
     mkarchiso -v -w "${work_dir}" -D "${install_dir}" -r 'locale-gen' run
     cat ${work_dir}/airootfs/etc/group | grep -c flux > 1 || chroot ${work_dir}/airootfs useradd -u 1000 -g users -G storage,floppy,optical,audio,video,network,games,wheel,disk -m flux -p ""
-    chroot ${work_dir}/airootfs echo root:root | chpasswd
+    chroot ${work_dir}/airootfs chpasswd <<<"root:root"
 echo "finished make_basefs: press enter"
 }
 
 # Copy mkinitcpio archiso hooks and build initramfs (airootfs)
 make_setup_mkinitcpio() {
-    cp /usr/lib/initcpio/hooks/archiso ${work_dir}/airootfs/usr/lib/initcpio/hooks
-    cp /usr/lib/initcpio/install/archiso ${work_dir}/airootfs/usr/lib/initcpio/install
-	cp /usr/lib/initcpio/install/archiso_loop_mnt ${work_dir}/airootfs/usr/lib/initcpio/install/
-	cp /usr/lib/initcpio/hooks/archiso_loop_mnt ${work_dir}/airootfs/usr/lib/initcpio/hooks/
+    mkdir -p ${work_dir}/airootfs/etc/initcpio/hooks
+    mkdir -p ${work_dir}/airootfs/etc/initcpio/install
+    cp /usr/lib/initcpio/hooks/archiso ${work_dir}/airootfs/etc/initcpio/hooks
+    cp /usr/lib/initcpio/install/archiso ${work_dir}/airootfs/etc/initcpio/install
+    cp /usr/lib/initcpio/hooks/archiso_loop_mnt ${work_dir}/airootfs/etc/initcpio/hooks
+    cp /usr/lib/initcpio/install/archiso_loop_mnt ${work_dir}/airootfs/etc/initcpio/install
     cp ${script_path}/mkinitcpio.conf ${work_dir}/airootfs/etc/flux-mkinitcpio.conf
-	mkarchiso -v -w "${work_dir}" -D "${install_dir}" -r \
-        'mkinitcpio \
+	mkarchiso -v -w "${work_dir}" -D "${install_dir}" -r 'mkinitcpio \
             -c /etc/flux-mkinitcpio.conf \
             -k $(pacman -Syi linux | grep Version | cut -c 18-26)-ARCH \
             -g /boot/fluxiso.img' run
@@ -104,10 +105,10 @@ echo "finished make_isolinux: press enter"
 }
 
 # Process aitab
-make_aitab() {
-    sed "s|%ARCH%|${arch}|g" ${script_path}/aitab > ${work_dir}/iso/${install_dir}/aitab
-echo "finished make_aitab: press enter"    
-}
+#make_aitab() {
+#    sed "s|%ARCH%|${arch}|g" ${script_path}/aitab > ${work_dir}/iso/${install_dir}/aitab
+#echo "finished make_aitab: press enter"    
+#}
 
 # Build all filesystem images specified in aitab (.fs.sfs .sfs)
 make_prepare() {
@@ -119,7 +120,7 @@ echo "finished make_prepare: press enter"
 make_iso() {
 #    mkarchiso -v -w "${work_dir}" -D "${install_dir}" checksum
     mkarchiso -v -w "${work_dir}" -D "${install_dir}" -L "${iso_label}" -o "${out_dir}" iso "${iso_name}-${iso_version}-${arch}.iso"
-    chown 1000:1000 out/"${iso_name}-${iso_version}-${arch}.iso"
+    chown 1000:1000 /home/empthollow/FluxImages/"${iso_name}-${iso_version}-${arch}.iso"
 }
 
 run_once make_basefs
@@ -127,6 +128,8 @@ run_once make_setup_mkinitcpio
 run_once make_boot
 run_once make_syslinux
 run_once make_isolinux
-run_once make_aitab
+#run_once make_aitab
 run_once make_prepare
 run_once make_iso
+END=$(date +%s);
+echo $((END-START)) | awk '{print int($1/60)":"int($1%60)}'

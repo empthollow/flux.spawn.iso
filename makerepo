@@ -11,6 +11,8 @@ rebuild - Rebuild package
   Variables: [package] [repo directory] [arch (i686/x86_64/any)] 
 add - Add package to repository
   Variables: [package] [repo directory] [arch (i686/x86_64/any)] 
+addbuilt 
+  Variables: [package] [repo directory] 
 remove   - Remove package from repository
   Variables: [package] [repo directory]"
 exit 0
@@ -33,13 +35,12 @@ repo-add flux.db.tar.gz *.xz
 buildlist()
 {
 if [ -d $var2 ]; then
-	rm -r $3
-	mkdir -p $3
+	rm -r $var2
+	mkdir -p $var2
 else
 mkdir -p $var2
 fi
 cd $var2
-packlist=$(pwd)/$var1
 for i in $(cat $packlist | grep -v "#"); do
 error
 yaourt -G --noconfirm aur/$i
@@ -90,6 +91,15 @@ rm -rf $var1
 mkdatabase
 }
 
+addbuilt()
+{
+test -d $var2 || $(echo "Specify correct repo directory" && exit &>2)
+cp $var1 $var2	
+error
+cd $var2
+mkdatabase
+}
+
 removepackage()
 {
 test -d $var2 || $(echo "Specify correct repo directory" && exit &>2)
@@ -98,13 +108,17 @@ cd $var2
 mkdatabase
 }
 
-if [ -z $3 ]; then
-echo -n "Syntax Error"
+syntest()
+{
+if [ -z $var2 ]; then
+echo "Syntax Error"
 syntax
 fi 
+}
 
 var1=$2
 var2=$3
+packlist=$(pwd)/$var1
 
 if [ "$4" == "i686" ] || [ "$4" == "x86_64" ]; then
 	arch=$4
@@ -113,13 +127,14 @@ else
 fi
 
 case $1 in
-	-h	)	syntax ;;
-	--help	)	syntax ;;
-	help	)	syntax ;;
-	full	)	buildlist ;;
-	rebuild	)	rebuildpackage ;;
-	add	)	addpackage ;;
-	remove	)	removepackage ;;
-	*	)	syntax ;;
+	-h		)	syntax ;;
+	--help		)	syntax ;;
+	help		)	syntax ;;
+	full		)	syntest; buildlist ;;
+	rebuild		)	syntest; rebuildpackage ;;
+	add		)	syntest; addpackage ;;
+	addbuilt	)	addbuilt ;;
+	remove		)	removepackage ;;
+	*		)	syntax ;;
 esac
 

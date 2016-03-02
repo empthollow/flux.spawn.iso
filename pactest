@@ -1,0 +1,10 @@
+#!/bin/bash
+
+list=$1
+for i in $(cat $list | grep -v "#"); do
+	if [ $(pacman -Ssq ^$i$ | grep -c $i) -lt 1 ]; then
+		if [ $(pacman -Sg $i | grep -c $i) -lt 1 ]; then
+			echo "missing: $i"
+		fi
+	fi
+done

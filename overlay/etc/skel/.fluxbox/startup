@@ -31,7 +31,7 @@ xset b 0
 # Change your keymap:
 # xmodmap "/home/empthollow/.Xmodmap"
 
-#/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 volumeicon &
 nm-applet &
 batterymon &

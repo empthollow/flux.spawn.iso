@@ -17,7 +17,7 @@ cpio
 cups
 deadbeef
 dmidecode
-dnsutils
+bind-tools
 dosfstools
 dsniff
 dvd+rw-tools
@@ -30,7 +30,7 @@ faenza-icon-theme
 firefox
 chromium
 fluxbox
-flux-utils-git
+flux-utils
 freeglut
 fuse
 galculator
@@ -45,13 +45,13 @@ gnumeric
 gnu-netcat
 gparted
 gpm
-grub-bios
+grub
 grun
 gstreamer0.10-base-plugins
 gtk-engine-murrine
 gutenprint
 gvfs
-gvfs-afp
+gvfs-afc
 gvfs-mtp
 gvfs-smb
 gvim
@@ -74,7 +74,6 @@ nfs-utils
 nmap
 ntfs-3g
 ntfs-config
-ntfsprogs
 openssh
 os-prober
 p7zip
@@ -112,5 +111,6 @@ file-roller
 xcompmgr
 xorg-server
 xorg-xinit
+yad
 zip
 xorg-drivers

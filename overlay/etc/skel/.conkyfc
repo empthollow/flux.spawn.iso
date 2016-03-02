@@ -3,7 +3,7 @@ update_interval	1.0
 double_buffer		yes
 
 use_xft			yes
-xftfont			Monospace:size=8
+xftfont			Monospace:size=10
 xftalpha			0.8
 
 own_window				yes

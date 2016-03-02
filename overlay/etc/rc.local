@@ -23,18 +23,18 @@ amixer set PCM 100% unmute
 #echo "\${hr}" >> /etc/skel/.conkyrc
 for net in $(ls /sys/class/net | grep -v lo) ; do
 	echo "\${if_up $net}\${color gray}$net\${color #707070}:\$color \${color white} \${addr $net}
-\${color gray} Down\${color #707070}:\$color \${downspeed $net} \${color gray} Up\${color #707070}:\$color \${upspeed $net} \${endif}" >> /etc/skel/.conkyrc
+\${color gray} Down\${color #707070}:\$color \${downspeed $net} \${color gray} Up\${color #707070}:\$color \${upspeed $net} \${endif}" >> /home/flux/.conkyrc
 done
 
 # Create fstab, bookmarks and mount
-echo "\${color white}Mounted Filesystems" >> /etc/skel/.conkyrc
-echo "\${hr}" >> /etc/skel/.conkyrc
+echo "\${color white}Mounted Filesystems" >> /home/flux/.conkyrc
+echo "\${hr}" >> /home/flux/.conkyrc
 for dev in $(ls /dev/disk/by-label/ | grep -v FluxCapacity) ; do
 	mkdir /media/$dev
 	echo "/dev/disk/by-label/$dev /media/$dev auto defaults,users,exec,rw 0 0" >> /etc/fstab
-	echo "file:///media/$dev $dev" >> /etc/skel/.gtk-bookmarks
+	echo "file:///media/$dev $dev" >> /home/flux/.gtk-bookmarks
 	echo "\${if_mounted /media/$dev}\${color gray}$dev\${color #707070}: \$color\${fs_used /media/$dev}/\${fs_size /media/$dev} 
- \${color gray}Free\${color #707070}: \$color\${fs_free /media/$dev} \${fs_bar /media/$dev}\${endif}" >> /etc/skel/.conkyrc
+ \${color gray}Free\${color #707070}: \$color\${fs_free /media/$dev} \${fs_bar /media/$dev}\${endif}" >> /home/flux/.conkyrc
 done
 mount -a
 

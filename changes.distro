@@ -1,0 +1,61 @@
+add wget
+themes
+	blumix; gnomishdusk; atolm-gtk3; flatstudio;adwaita grn; flat-plat
+sakura transparency
+framebuffer 795
++fix root password
++fix gmixer
++fix printer control center to start daemon
++fix add adobe flash plugin
++sakura fonts size
++conky font size
++add conky for fchelp
++change pacman mirrorlist
++thunar permissions
++put packages.list in overlay
++edit pam for slim.
+add .service file for conky networking
++thunar terminal sakura
+updatedb
+conky fstab partitions
+
+Ideas-----------------------------------
+switch to terminator
+switch default term in thunar
+switch default term in menu
+switch to smplayer?
+pulseaudio?
+switch to pnmixer for tray?
+adjust slim theme for multi desktop
+new fluxbox theme
+conky multi-processor
+fbmenugen
+
+______________________
+
+===Flux-utils========
+update daemondialog
++wallpaper setter .desktop file
+flux2hd
+	change packages.list & remove generation
+	+install fresh
+	+grub accomodate windows
+	copy .conkyrc from running
+	check for swap update to parted
+	daemondialog - add x11vnc
+	sudoers
+	edit sudoers for install
+	check 64bit
++slim theme package
+
+_______________________________
+Web sIte
+
+*burning / dd
+*packages list
+installation
+label a disk
+hfsprogs
+downloads page
+contact page
+
