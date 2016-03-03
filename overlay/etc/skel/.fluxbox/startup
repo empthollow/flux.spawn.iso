@@ -38,6 +38,7 @@ batterymon &
 conky &
 conky -c ~/.conkyfc &
 xcompmgr -f &
+/usr/bin/VBoxClient-all &
 
 # Applications you want to run with fluxbox.
 # MAKE SURE THAT APPS THAT KEEP RUNNING HAVE AN ''&'' AT THE END.

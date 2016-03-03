@@ -46,7 +46,7 @@ if [ -n "$(mount | grep airootfs)" ]; then
     umount -l work/airootfs/dev && umount -l work/airootfs ;
 fi
     mkarchiso -v -w "${work_dir}" -D "${install_dir}" -r 'locale-gen' run
-    cat ${work_dir}/airootfs/etc/group | grep -c flux > 1 || chroot ${work_dir}/airootfs useradd -u 1000 -g users -G storage,floppy,optical,audio,video,network,games,wheel,disk -m flux -p ""
+    cat ${work_dir}/airootfs/etc/group | grep -c flux > 1 || chroot ${work_dir}/airootfs useradd -u 1000 -g users -G storage,floppy,optical,audio,video,network,games,wheel,disk,vboxsf -m flux -p ""
     chroot ${work_dir}/airootfs chpasswd <<<"root:root"
 echo "finished make_basefs: press enter"
 }

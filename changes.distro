@@ -1,8 +1,15 @@
-add wget
-themes
+-add wget
+-add vitrualbox-guest-utils
+-add vbox module load option in lilo - vboxguest vboxsf vboxvideo
+-flux startup - /usr/sbin/VBoxClient-all + if statement
+-remove lug.mtp.edu
+-add user to vboxsf group
+UEFI
+-gtk default theme
+-themes
 	blumix; gnomishdusk; atolm-gtk3; flatstudio;adwaita grn; flat-plat
-sakura transparency
-framebuffer 795
+-sakura transparency
+-framebuffer 795
 +fix root password
 +fix gmixer
 +fix printer control center to start daemon
