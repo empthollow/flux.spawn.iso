@@ -1,10 +1,28 @@
 #!/bin/bash
 
-list=$1
-for i in $(cat $list | grep -v "#"); do
-	if [ $(pacman -Ssq ^$i$ | grep -c $i) -lt 1 ]; then
-		if [ $(pacman -Sg $i | grep -c $i) -lt 1 ]; then
-			echo "missing: $i"
-		fi
+if [ -z $1 ]; then
+	echo "missing list file"
+	echo "Syntax: pactest [list_file]"
+	exit
+else
+list=$1 
+conf=$2
+	if [ -z $conf ]; then
+		for i in $(cat $list | grep -v "#"); do
+			if [ $(pacman -Ssq ^$i | grep -c $i) -lt 1 ]; then
+				if [ $(pacman -Sg $i | grep -c $i) -lt 1 ]; then
+					echo "missing: $i"
+				fi
+			fi
+		done
+	else
+		for i in $(cat $list | grep -v "#"); do
+			if [ $(pacman --config $conf -Ssq ^$i$ | grep -c $i) -lt 1 ]; then
+				if [ $(pacman --config $conf -Sg $i | grep -c $i) -lt 1 ]; then
+					echo "missing: $i"
+				fi
+			fi
+		done
 	fi
-done
+
+fi

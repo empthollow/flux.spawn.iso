@@ -14,7 +14,10 @@ add - Add package to repository
 addbuilt 
   Variables: [package] [repo directory] 
 remove   - Remove package from repository
-  Variables: [package] [repo directory]"
+  Variables: [package] [repo directory]
+upload - mirror repo to ftp site
+  Variables: [package] [repo directory]" 
+
 exit 0
 }
 
@@ -126,6 +129,15 @@ else
 	arch=any
 fi
 
+uploadrepo()
+{
+if [ -z $var1 ]; then
+	syntax
+else
+	lftp -e "mirror -R $var1; exit"  fluxrepo
+fi
+}
+
 case $1 in
 	-h		)	syntax ;;
 	--help		)	syntax ;;
@@ -135,6 +147,7 @@ case $1 in
 	add		)	syntest; addpackage ;;
 	addbuilt	)	addbuilt ;;
 	remove		)	removepackage ;;
+	upload		)	uploadrepo ;;
 	*		)	syntax ;;
 esac
 

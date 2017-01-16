@@ -41,7 +41,7 @@
 [submenu] (Editors) </usr/share/icons/AwOken/clear/24x24/apps/text-editor.png>
       [exec]   (Medit) {medit} </usr/share/icons/AwOken/clear/24x24/apps/text-editor.png>
       [exec]   (Bluefish) {bluefish} </usr/share/icons/AwOken/clear/24x24/apps/bluefish-icon.png>
-      [exec]   (Gvim) {gvim} </usr/share/icons/AwOken/clear/24x24/apps/vimlogo.png>
+      [exec]   (Meld) {meld} </usr/share/icons/AwOken/clear/24x24/apps/meld.png>
       [exec]   (Nano) {sakura -e nano} </usr/share/icons/AwOken/clear/24x24/apps/text-editor.png>
       [exec]   (Vim) {sakura -e vim} </usr/share/icons/AwOken/clear/24x24/apps/vim.png>
 [end]

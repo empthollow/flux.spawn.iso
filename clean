@@ -12,10 +12,10 @@ Operations
 
 pacache()
 {
-sudo mv work/root-image/var/cache/pacman/pkg /tmp/pkg
+sudo mv work/airootfs/var/cache/pacman/pkg /tmp/pkg
 sudo rm -r work
-sudo mkdir -p work/root-image/var/cache/pacman
-sudo mv /tmp/pkg work/root-image/var/cache/pacman/pkg
+sudo mkdir -p work/airootfs/var/cache/pacman
+sudo mv /tmp/pkg work/airootfs/var/cache/pacman/pkg
 }
 
 if [ -n "$(mount | grep airootfs)" ]; then
@@ -25,7 +25,7 @@ fi
 case $1 in
 nocache		)	pacache ;;
 work		)	sudo rm -r work ;;
-repo		)	rm -r overlay/etc/repo ;;
+#repo		)	rm -r overlay/etc/repo ;;
 all		)	sudo rm -r work; rm -r overlay/etc/repo ;;
 *		)	usage ;;
 esac

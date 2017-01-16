@@ -46,7 +46,7 @@ gnu-netcat
 gparted
 gpm
 grub
-grun
+drun
 gstreamer0.10-base-plugins
 gtk-engine-murrine
 gutenprint
@@ -54,10 +54,10 @@ gvfs
 gvfs-afc
 gvfs-mtp
 gvfs-smb
-gvim
 gxmessage
 hfsprogs
 hwdetect
+jre7-openjdk
 icedtea-web
 linux
 lsof
@@ -98,10 +98,14 @@ sudo
 syslinux
 thunderbird
 tigervnc
+ttf-dejavu
 unrar
 unzip
 urlview
 volumeicon
+wget
+meld
+vim
 networkmanager
 network-manager-applet
 x11vnc
@@ -114,3 +118,5 @@ xorg-xinit
 yad
 zip
 xorg-drivers
+virtualbox-guest-modules-arch
+virtualbox-guest-utils 

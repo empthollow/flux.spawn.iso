@@ -15,6 +15,7 @@ iso_label="FluxCapacity"
 iso_version=9.$revision
 install_dir=flux
 work_dir=work
+gpg_key=
 
 case $1 in
 	i686	)	arch=i686 ;;
@@ -46,21 +47,34 @@ if [ -n "$(mount | grep airootfs)" ]; then
     umount -l work/airootfs/dev && umount -l work/airootfs ;
 fi
     mkarchiso -v -w "${work_dir}" -D "${install_dir}" -r 'locale-gen' run
-    cat ${work_dir}/airootfs/etc/group | grep -c flux > 1 || chroot ${work_dir}/airootfs useradd -u 1000 -g users -G storage,floppy,optical,audio,video,network,games,wheel,disk,vboxsf -m flux -p ""
+    cat ${work_dir}/airootfs/etc/group | grep -c flux > 1 || chroot ${work_dir}/airootfs useradd -u 1000 -g users -G storage,floppy,optical,audio,video,network,games,wheel,disk -m flux -p ""
     chroot ${work_dir}/airootfs chpasswd <<<"root:root"
 echo "finished make_basefs: press enter"
 }
 
+# Needed packages for x86_64 EFI boot
+make_packages_efi() {
+    mkarchiso ${verbose} -v -w "${work_dir}" -C "pacman.conf" -D "${install_dir}" -p "efitools intel-ucode memtest86+" install
+}
+
 # Copy mkinitcpio archiso hooks and build initramfs (airootfs)
 make_setup_mkinitcpio() {
+    local _hook
     mkdir -p ${work_dir}/airootfs/etc/initcpio/hooks
     mkdir -p ${work_dir}/airootfs/etc/initcpio/install
-    cp /usr/lib/initcpio/hooks/archiso ${work_dir}/airootfs/etc/initcpio/hooks
-    cp /usr/lib/initcpio/install/archiso ${work_dir}/airootfs/etc/initcpio/install
-    cp /usr/lib/initcpio/hooks/archiso_loop_mnt ${work_dir}/airootfs/etc/initcpio/hooks
-    cp /usr/lib/initcpio/install/archiso_loop_mnt ${work_dir}/airootfs/etc/initcpio/install
+    for _hook in archiso archiso_shutdown archiso_pxe_common archiso_pxe_nbd archiso_pxe_http archiso_pxe_nfs archiso_loop_mnt; do
+        cp /usr/lib/initcpio/hooks/${_hook} ${work_dir}/airootfs/etc/initcpio/hooks
+        cp /usr/lib/initcpio/install/${_hook} ${work_dir}/airootfs/etc/initcpio/install
+    done
+    sed -i "s|/usr/lib/initcpio/|/etc/initcpio/|g" ${work_dir}/airootfs/etc/initcpio/install/archiso_shutdown
+    cp /usr/lib/initcpio/install/archiso_kms ${work_dir}/airootfs/etc/initcpio/install
+    cp /usr/lib/initcpio/archiso_shutdown ${work_dir}/airootfs/etc/initcpio
+    #cp /usr/lib/initcpio/hooks/archiso ${work_dir}/airootfs/etc/initcpio/hooks
+    #cp /usr/lib/initcpio/install/archiso ${work_dir}/airootfs/etc/initcpio/install
+    #cp /usr/lib/initcpio/hooks/archiso_loop_mnt ${work_dir}/airootfs/etc/initcpio/hooks
+    #cp /usr/lib/initcpio/install/archiso_loop_mnt ${work_dir}/airootfs/etc/initcpio/install
     cp ${script_path}/mkinitcpio.conf ${work_dir}/airootfs/etc/flux-mkinitcpio.conf
-	mkarchiso -v -w "${work_dir}" -D "${install_dir}" -r 'mkinitcpio \
+	setarch ${arch} mkarchiso -v -w "${work_dir}" -D "${install_dir}" -r 'mkinitcpio \
             -c /etc/flux-mkinitcpio.conf \
             -k $(pacman -Syi linux | grep Version | cut -c 18-26)-ARCH \
             -g /boot/fluxiso.img' run
@@ -72,6 +86,10 @@ make_boot() {
     mkdir -p ${work_dir}/iso/${install_dir}/boot/${arch}
     cp ${work_dir}/airootfs/boot/fluxiso.img ${work_dir}/iso/${install_dir}/boot/${arch}/fluxiso.img
     cp ${work_dir}/airootfs/boot/vmlinuz-linux ${work_dir}/iso/${install_dir}/boot/${arch}/vmlinuz
+    cp ${work_dir}/airootfs/boot/memtest86+/memtest.bin ${work_dir}/iso/${install_dir}/boot/memtest
+    cp ${work_dir}/airootfs/usr/share/licenses/common/GPL2/license.txt ${work_dir}/iso/${install_dir}/boot/memtest.COPYING
+    cp ${work_dir}/airootfs/boot/intel-ucode.img ${work_dir}/iso/${install_dir}/boot/intel_ucode.img
+    cp ${work_dir}/airootfs/usr/share/licenses/intel-ucode/LICENSE ${work_dir}/iso/${install_dir}/boot/intel_ucode.LICENSE
 echo "finished make_boot: press enter"
 }
 
@@ -81,14 +99,15 @@ make_syslinux() {
     sed "s|%ARCHISO_LABEL%|${iso_label}|g;
          s|%INSTALL_DIR%|${install_dir}|g;
          s|%ARCH%|${arch}|g" ${script_path}/syslinux/syslinux.cfg > ${work_dir}/iso/${install_dir}/boot/syslinux/syslinux.cfg
-	cp ${work_dir}/airootfs/usr/lib/syslinux/bios/vesamenu.c32 ${work_dir}/iso/${install_dir}/boot/syslinux/
-	cp ${work_dir}/airootfs/usr/lib/syslinux/bios/reboot.c32 ${work_dir}/iso/${install_dir}/boot/syslinux/
-	cp ${work_dir}/airootfs/usr/lib/syslinux/bios/ldlinux.c32 ${work_dir}/iso/${install_dir}/boot/syslinux/
-	cp ${work_dir}/airootfs/usr/lib/syslinux/bios/libutil.c32 ${work_dir}/iso/${install_dir}/boot/syslinux/
-	cp ${work_dir}/airootfs/usr/lib/syslinux/bios/libcom32.c32 ${work_dir}/iso/${install_dir}/boot/syslinux/
+	cp ${work_dir}/airootfs/usr/lib/syslinux/bios/*.c32 ${work_dir}/iso/${install_dir}/boot/syslinux/
+	cp ${work_dir}/airootfs/usr/lib/syslinux/bios/lpxelinux.0 ${work_dir}/iso/${install_dir}/boot/syslinux
+        cp ${work_dir}/airootfs/usr/lib/syslinux/bios/memdisk ${work_dir}/iso/${install_dir}/boot/syslinux
 	cp syslinux/x86test ${work_dir}/iso/${install_dir}/boot/syslinux/
 	cp syslinux/memtest ${work_dir}/iso/${install_dir}/boot/syslinux/
 	cp syslinux/splash.png ${work_dir}/iso/${install_dir}/boot/syslinux/
+    mkdir -p ${work_dir}/iso/${install_dir}/boot/syslinux/hdt
+    gzip -c -9 ${work_dir}/airootfs/usr/share/hwdata/pci.ids > ${work_dir}/iso/${install_dir}/boot/syslinux/hdt/pciids.gz
+    gzip -c -9 ${work_dir}/airootfs/usr/lib/modules/*-ARCH/modules.alias > ${work_dir}/iso/${install_dir}/boot/syslinux/hdt/modalias.gz
 echo "finished make_syslinux: press enter"
 }
 
@@ -104,13 +123,57 @@ make_isolinux() {
 echo "finished make_isolinux: press enter"    
 }
 
-# Process aitab
-#make_aitab() {
-#    sed "s|%ARCH%|${arch}|g" ${script_path}/aitab > ${work_dir}/iso/${install_dir}/aitab
-#echo "finished make_aitab: press enter"    
-#}
+# Prepare /EFI
+make_efi() {
+    mkdir -p ${work_dir}/iso/EFI/boot
+    cp ${work_dir}/airootfs/usr/share/efitools/efi/PreLoader.efi ${work_dir}/iso/EFI/boot/bootx64.efi
+    cp ${work_dir}/airootfs/usr/share/efitools/efi/HashTool.efi ${work_dir}/iso/EFI/boot/
 
-# Build all filesystem images specified in aitab (.fs.sfs .sfs)
+    cp ${work_dir}/airootfs/usr/lib/systemd/boot/efi/systemd-bootx64.efi ${work_dir}/iso/EFI/boot/loader.efi
+
+    mkdir -p ${work_dir}/iso/loader/entries
+    cp ${script_path}/efiboot/loader/usb/loader.conf ${work_dir}/iso/loader/
+#    cp ${script_path}/efiboot/loader/entries/uefi-shell-v2-x86_64.conf ${work_dir}/iso/loader/entries/
+#    cp ${script_path}/efiboot/loader/entries/uefi-shell-v1-x86_64.conf ${work_dir}/iso/loader/entries/
+    cp $(ls ${script_path}/efiboot/loader/entries/* | grep -v cd) ${work_dir}/iso/loader/entries/
+
+    # EFI Shell 2.0 for UEFI 2.3+
+    curl -o ${work_dir}/iso/EFI/shellx64_v2.efi https://raw.githubusercontent.com/tianocore/edk2/master/ShellBinPkg/UefiShell/X64/Shell.efi
+    # EFI Shell 1.0 for non UEFI 2.3+
+    curl -o ${work_dir}/iso/EFI/shellx64_v1.efi https://raw.githubusercontent.com/tianocore/edk2/master/EdkShellBinPkg/FullShell/X64/Shell_Full.efi
+}
+
+# Prepare efiboot.img::/EFI for "El Torito" EFI boot mode
+make_efiboot() {
+    mkdir -p ${work_dir}/iso/EFI/fluxiso
+    truncate -s 64M ${work_dir}/iso/EFI/fluxiso/efiboot.img
+    mkfs.fat -n ARCHISO_EFI ${work_dir}/iso/EFI/fluxiso/efiboot.img
+
+    mkdir -p ${work_dir}/efiboot
+    mount ${work_dir}/iso/EFI/fluxiso/efiboot.img ${work_dir}/efiboot
+
+    mkdir -p ${work_dir}/efiboot/EFI/fluxiso
+    cp ${work_dir}/iso/${install_dir}/boot/x86_64/vmlinuz ${work_dir}/efiboot/EFI/fluxiso/vmlinuz.efi
+    cp ${work_dir}/iso/${install_dir}/boot/x86_64/fluxiso.img ${work_dir}/efiboot/EFI/fluxiso/archiso.img
+
+    cp ${work_dir}/iso/${install_dir}/boot/intel_ucode.img ${work_dir}/efiboot/EFI/fluxiso/intel_ucode.img
+
+    mkdir -p ${work_dir}/efiboot/EFI/boot
+    cp ${work_dir}/airootfs/usr/share/efitools/efi/PreLoader.efi ${work_dir}/efiboot/EFI/boot/bootx64.efi
+    cp ${work_dir}/airootfs/usr/share/efitools/efi/HashTool.efi ${work_dir}/efiboot/EFI/boot/
+
+    cp ${work_dir}/airootfs/usr/lib/systemd/boot/efi/systemd-bootx64.efi ${work_dir}/efiboot/EFI/boot/loader.efi
+
+    mkdir -p ${work_dir}/efiboot/loader/entries
+    cp ${script_path}/efiboot/loader/disc/loader.conf ${work_dir}/efiboot/loader/
+    cp $(ls ${script_path}/efiboot/loader/entries/* | grep -v usb) ${work_dir}/efiboot/loader/entries/
+    cp ${work_dir}/iso/EFI/shellx64_v2.efi ${work_dir}/efiboot/EFI/
+    cp ${work_dir}/iso/EFI/shellx64_v1.efi ${work_dir}/efiboot/EFI/
+
+    umount -d ${work_dir}/efiboot
+}
+
+# Build airootfs filesystem image
 make_prepare() {
     mkarchiso -v -w "${work_dir}" -D "${install_dir}" prepare
 echo "finished make_prepare: press enter"    
@@ -124,11 +187,13 @@ make_iso() {
 }
 
 run_once make_basefs
+run_once make_packages_efi
 run_once make_setup_mkinitcpio
 run_once make_boot
 run_once make_syslinux
 run_once make_isolinux
-#run_once make_aitab
+run_once make_efi
+run_once make_efiboot
 run_once make_prepare
 run_once make_iso
 END=$(date +%s);
